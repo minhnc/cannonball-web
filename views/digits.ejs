@@ -28,27 +28,26 @@
   <meta name="og:image" content="http://cannonballapp.io/images/cannonball-twitter-card.png">
 </head>
 <body>
-  <div class="container">
-    <main>
-      <section class="cannonball">
-        <header>
-          <h1 class="logo bounce"><a href="/">Cannonball</a></h1>
-          <h2>Cannonball is the fun way to create and share stories and poems on your phone.</h2>
-        </header>
-        <div class="digits">
-          <button class="digits-button">Sign In with Phone</button>
-        </div>
-      </section>
-    </main>
-  </div>
   <script>
     var config = {
       digitsConsumerKey: '<%= DIGITS_CONSUMER_KEY %>'
     };
   </script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script id="digits-sdk" src="https://cdn.digits.com/1/sdk.js" async></script>
-  <script src="/javascripts/digits.js"></script>
+
+  <script>
+    document.getElementById('digits-sdk').onload = function() {
+	    // Initialize Digits using the API key.
+	    Digits.init({ consumerKey: config.digitsConsumerKey })
+	      .done(function() {
+	        console.log('Digits initialized.');
+	        Digits.logIn({ callbackURL: 'http://192.168.31.142:3000/digits_callback' });
+	      })
+	      .fail(function() {
+	        alert('Digits failed to initialize.');
+	      });
+  	};
+  </script>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </body>
 </html>
