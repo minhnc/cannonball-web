@@ -81,4 +81,14 @@ router.post('/digits', function (req, res) {
   });
 });
 
+/**
+ * GET digits page.
+ */
+router.get('/digits', function (req, res, next) {
+  res.render('digits', {
+    DIGITS_CONSUMER_KEY: nconf.get('DIGITS_CONSUMER_KEY'),
+    GA_TRACKING_ID: nconf.get('GA_TRACKING_ID')
+  });
+});
+
 module.exports = router;
